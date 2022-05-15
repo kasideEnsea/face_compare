@@ -57,7 +57,6 @@ while True:
         name = "Unknown"
         if dist < max_distance:
             name = data['names'][ind[0][0]]
-        print(name)
         names.append(name)
     for ((x, y, w, h), name) in zip(faces, names):
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
