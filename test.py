@@ -32,14 +32,8 @@ for i in range (50, 3000):
 
 image = cv2.imread("ref/" + name + ".jpg")
 rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-faces = faceCascade.detectMultiScale(gray,
-                                         scaleFactor=1.1,
-                                         minNeighbors=5,
-                                         minSize=(60, 60),
-                                         flags=cv2.CASCADE_SCALE_IMAGE)
-
-encodings = face_recognition.face_encodings(rgb)
+faces = face_recognition.face_locations(rgb, model='hog')
+encodings = face_recognition.face_encodings(rgb, faces)
 
 for i in range(51, len(data['encodings']), 50):
     experiment_sizes.append(i)
@@ -69,9 +63,6 @@ for i in range(51, len(data['encodings']), 50):
         classification_time_dlib.append((finish - start).total_seconds())
         accuracy_check_dlib.append(classified_name == name)
 
-print(accuracy_check)
-print(accuracy_check_dlib)
-
 fig = plt.figure(figsize=(8, 8))
 plt.xlabel = 'Размер датасета'
 plt.ylabel = 'Время'
@@ -90,14 +81,8 @@ accuracy_check = []
 for name in names:
     image = cv2.imread("ref/" + name + ".jpg")
     rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    faces = faceCascade.detectMultiScale(gray,
-                                         scaleFactor=1.1,
-                                         minNeighbors=5,
-                                         minSize=(60, 60),
-                                         flags=cv2.CASCADE_SCALE_IMAGE)
-
-    encodings = face_recognition.face_encodings(rgb)
+    faces = face_recognition.face_locations(rgb, model='hog')
+    encodings = face_recognition.face_encodings(rgb, faces)
     start = datetime.now()
     dist, ind = tree.query(encodings, k=1)
     classified_name = "Unknown"
