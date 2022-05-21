@@ -21,10 +21,10 @@ standarted_data = StandardScaler().fit_transform(data["encodings"])
 pca = PCA(n_components=2)
 principalComponents = pca.fit_transform(standarted_data)
 fig = plt.figure(figsize=(8, 8))
-plt.xlabel = 'Principal Component 1'
-plt.ylabel = 'Principal Component 2'
-plt.title = '2 component PCA'
 plt.scatter(principalComponents[:, 0], principalComponents[:, 1], c='red')
+plt.xlabel("Основной компонент 1")
+plt.ylabel("Основной компонент 2")
+plt.title('PCA')
 plt.show()
 
 min_distances = []
@@ -35,9 +35,13 @@ for encoding in data['encodings']:
 
 plt.hlines(0, xmin=min(min_distances), xmax=max(min_distances))
 plt.scatter(min_distances, [0] * len(min_distances), c='#0a0b0c3a', s=50)
+plt.title('Минимальные расстояния для каждой точки')
 plt.show()
 
-plt.hist(min_distances, 6)
+hist = plt.hist(min_distances, 6)
+plt.xlabel('Минимальные расстояния')
+plt.ylabel('Колличество точек')
+plt.title('Соотношение минимальных расстояний между точками')
 plt.show()
 
 min_distances = sorted(min_distances)

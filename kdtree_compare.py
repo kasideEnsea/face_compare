@@ -12,10 +12,12 @@ max_distance = float(f.read())
 video_capture = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 while True:
     names = []
-    # grab the frame from the threaded video stream
+
     ret, frame = video_capture.read()
     rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
     faces = face_recognition.face_locations(rgb, model='hog')
+    print(faces)
     encodings = face_recognition.face_encodings(rgb, faces)
 
     for encoding in encodings:
